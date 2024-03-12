@@ -1,0 +1,38 @@
+<div *ngIf="showLoginPage; else registerPage">
+    <h1>Login</h1>
+    <form (submit)="login()">
+        <div>
+            <label for="email">Email:</label>
+            <input type="text" name="email" [(ngModel)]="email">
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" name="password" [(ngModel)]="password">
+        </div>
+        <div>
+            <input type="submit" value="Login">
+        </div>
+    </form>
+
+    <br>
+    <p>Don't have an cccount?</p>
+    <button (click)="togglePageMode()">Register</button>
+</div>
+
+<ng-template #registerPage>
+    <div>
+        <form (submit)="register()">
+            <div>
+                <label for="email">Email:</label>
+                <input type="text" name="email" [(ngModel)]="email">
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" name="password" [(ngModel)]="password">
+            </div>
+            <div>
+                <input type="submit" value="Register">
+            </div>
+        </form>
+    </div>
+</ng-template>
