@@ -1,38 +1,41 @@
-<div *ngIf="showLoginPage; else registerPage">
-    <h1>Login</h1>
-    <form (submit)="login()">
-        <div>
-            <label for="email">Email:</label>
-            <input type="text" name="email" [(ngModel)]="email">
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" name="password" [(ngModel)]="password">
-        </div>
-        <div>
-            <input type="submit" value="Login">
-        </div>
-    </form>
-
-    <br>
-    <p>Don't have an cccount?</p>
-    <button (click)="togglePageMode()">Register</button>
+<header>
+    <h1>Course Collab</h1>
+</header>
+<div *ngIf="showLoginPage; else registerPage" class="container">
+    <div class="content">
+        <h1>Login</h1>
+        <form (submit)="login()" class="form">
+            <div>
+                <input type="text" name="email" [(ngModel)]="email" placeholder="Enter your email" class="inputs">
+            </div>
+            <div>
+                <input type="password" name="password" [(ngModel)]="password" placeholder="Enter your password" class="inputs">
+            </div>
+            <div>
+                <input type="submit" value="Login" id="login">
+            </div>
+        </form>
+        <br>
+        <p>Don't have an account?</p>
+        <button (click)="togglePageMode()">Register</button>
+    </div>
 </div>
 
 <ng-template #registerPage>
-    <div>
-        <form (submit)="register()">
-            <div>
-                <label for="email">Email:</label>
-                <input type="text" name="email" [(ngModel)]="email">
-            </div>
-            <div>
-                <label for="password">Password:</label>
-                <input type="password" name="password" [(ngModel)]="password">
-            </div>
-            <div>
-                <input type="submit" value="Register">
-            </div>
-        </form>
+    <div class="container">
+        <div class="content">
+            <h1>Register</h1>
+            <form (submit)="register()" class="form">
+                <div>
+                    <input type="text" name="email" [(ngModel)]="email" placeholder="Enter your email" class="inputs">
+                </div>
+                <div>
+                    <input type="password" name="password" [(ngModel)]="password" placeholder="Enter your password" class="inputs">
+                </div>
+                <div>
+                    <input type="submit" value="Register" id="login">
+                </div>
+            </form>
+        </div>
     </div>
 </ng-template>
