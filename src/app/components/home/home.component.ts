@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
 
+import { User } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 
 
@@ -10,6 +11,7 @@ import { AuthService } from '../../services/auth.service';
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit{
+    loggedInUserId: string = sessionStorage.getItem('loggedInUserId')!;
     constructor(private authService : AuthService, private router: Router) { }
     //User's course data (remember to link to courses)
     private courses = [{

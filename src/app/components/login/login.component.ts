@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router'; 
 
+import { User } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 
 
@@ -12,6 +13,8 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent {
     email: string = '';
     password: string = '';
+    firstName: string = '';
+    lastName: string = '';
 
     showLoginPage: boolean = true;
 
@@ -32,7 +35,8 @@ export class LoginComponent {
     }
 
     register() {
-        this.authService.register(this.email, this.password).subscribe((result) => {
+        const newUser = new User(this.email, this.password, this.firstName, this.lastName);
+        this.authService.register(newUser).subscribe((result) => {
             if (result) {
                 this.togglePageMode();
             } else {

@@ -27,6 +27,12 @@
             <h1>Register</h1>
             <form (submit)="register()" class="form">
                 <div>
+                    <input type="text" name="firstName" [(ngModel)]="firstName" placeholder="First name" class="inputs">
+                </div>
+                <div>
+                    <input type="text" name="lastName" [(ngModel)]="lastName" placeholder="Last name" class="inputs">
+                </div>
+                <div>
                     <input type="text" name="email" [(ngModel)]="email" placeholder="Enter your email" class="inputs">
                 </div>
                 <div>
