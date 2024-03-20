@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Subject, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
@@ -36,12 +36,13 @@ export class AuthService {
 
     login(email: string, password: string): Observable<User> {
         console.log('Logging in with email=', email, ' and password=', password);
-        let params = new HttpParams({ fromObject: { email: email, password: password } });
-        return this.http.get<LoginResponse>(this.baseUrl + "users", {params}).pipe(
+        return this.http.post<LoginResponse>(this.baseUrl + "auth/login", {email, password}).pipe(
             map(response => {
                 if (response.status === 'success') {
                     console.log('User registered successfully');
-                    localStorage.setItem('auth_token', response.token);
+                    localStorage.setItem('authToken', response.token);
+                    console.log(response.data);
+                    localStorage.setItem('loggedInUserId', response.data._id!);
                     return response.data;
                 }
                 else {
@@ -53,12 +54,13 @@ export class AuthService {
     }
 
     isAuthenticatedUser(): boolean {
-        return localStorage.getItem('auth_token') !== null;
+        return localStorage.getItem('authToken') !== null;
     }
     
     logout(): void {
         console.log('Logging out user with auth_token=', localStorage.getItem('auth_token'));
-        localStorage.removeItem('auth_token');
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('loggedInUserId');
     }
 
     register(newUser: User): Observable<boolean> {
