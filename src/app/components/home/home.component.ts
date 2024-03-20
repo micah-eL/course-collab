@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth.service';
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-    loggedInUserId: string = localStorage.getItem('loggedInUserId')!;
+    loggedInUserId: string = sessionStorage.getItem('loggedInUserId')!;
 
     constructor(private authService : AuthService, private router: Router) { }
 

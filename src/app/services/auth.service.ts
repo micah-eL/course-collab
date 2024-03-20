@@ -40,9 +40,9 @@ export class AuthService {
             map(response => {
                 if (response.status === 'success') {
                     console.log('User registered successfully');
-                    localStorage.setItem('authToken', response.token);
+                    sessionStorage.setItem('authToken', response.token);
                     console.log(response.data);
-                    localStorage.setItem('loggedInUserId', response.data._id!);
+                    sessionStorage.setItem('loggedInUserId', response.data._id!);
                     return response.data;
                 }
                 else {
@@ -54,13 +54,13 @@ export class AuthService {
     }
 
     isAuthenticatedUser(): boolean {
-        return localStorage.getItem('authToken') !== null;
+        return sessionStorage.getItem('authToken') !== null;
     }
     
     logout(): void {
-        console.log('Logging out user with auth_token=', localStorage.getItem('auth_token'));
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('loggedInUserId');
+        console.log('Logging out user with auth_token=', sessionStorage.getItem('auth_token'));
+        sessionStorage.removeItem('authToken');
+        sessionStorage.removeItem('loggedInUserId');
     }
 
     register(newUser: User): Observable<boolean> {
