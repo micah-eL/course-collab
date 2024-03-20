@@ -48,15 +48,3 @@ input::placeholder {
     margin-top: 20px;
     background-color: #ADC4CE;
 }
-button {
-    background-color: #ADC4CE;
-    border: 1px solid #000000;
-    border-radius: 5px;
-    height: 30px;
-}
-#login:hover {
-    background-color: #8C9DA6; 
-}
-button:hover {
-    background-color: #8C9DA6; 
-}

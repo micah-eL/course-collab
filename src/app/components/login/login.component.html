@@ -11,13 +11,13 @@
             <div>
                 <input type="password" name="password" [(ngModel)]="password" placeholder="Enter your password" class="inputs">
             </div>
-            <div>
-                <input type="submit" value="Login" id="login">
+            <div class="d-grid gap-2">
+                <input type="submit" value="Login" class="btn btn-primary">
             </div>
         </form>
         <br>
         <p>Don't have an account?</p>
-        <button (click)="togglePageMode()">Register</button>
+        <button  class="btn btn-primary" (click)="togglePageMode()">Register</button>
     </div>
 </div>
 
@@ -32,8 +32,8 @@
                 <div>
                     <input type="password" name="password" [(ngModel)]="password" placeholder="Enter your password" class="inputs">
                 </div>
-                <div>
-                    <input type="submit" value="Register" id="login">
+                <div class="d-grid gap-2">
+                    <input type="submit" value="Register" class="btn btn-primary">
                 </div>
             </form>
         </div>
