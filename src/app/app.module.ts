@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { MessagesComponent } from './components/messages/messages.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { MessagesComponent } from './components/messages/messages.component';
         AppComponent,
         LoginComponent,
         HomeComponent,
-        MessagesComponent
+        MessagesComponent,
+        NavbarComponent
     ],
     imports: [
         BrowserModule,
