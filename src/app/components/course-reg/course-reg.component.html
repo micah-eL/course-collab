@@ -1,5 +1,6 @@
 <div class="container">
     <h1>Course Registration</h1>
+    <app-searchbar (searchQuery)="searchCourses($event)" (clearSearch) ="clearSearch()"></app-searchbar>
     <table class="table">
         <thead>
         <tr>
@@ -10,7 +11,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let course of courses">
+        <tr *ngFor="let course of searchResult">
             <td>{{ course.code }}</td>
             <td>{{ course.number }}</td>
             <td>{{ course.name }}</td>
