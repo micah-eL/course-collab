@@ -1,0 +1,24 @@
+<div class="container">
+    <h1>Course Registration</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Course Code</th>
+            <th scope="col">Course Number</th>
+            <th scope="col">Course Name</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let course of courses">
+            <td>{{ course.code }}</td>
+            <td>{{ course.number }}</td>
+            <td>{{ course.name }}</td>
+            <td>
+            <button class="btn btn-primary" (click)="registerCourse(course)">Register</button>
+            </td>
+        </tr>
+    </tbody>
+    </table>
+</div>
+  
