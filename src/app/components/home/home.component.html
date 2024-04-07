@@ -1,6 +1,27 @@
 <div>
-    <p>This page should only be showing if you've successfully logged in!</p>
-    <p>You are logged in as: {{loggedInUserId}}</p>
+    <div>
+        <p>This page should only be showing if you've successfully logged in!</p>
+        <p>You are logged in as: {{loggedInUserId}}</p>
 
-    <button (click)="logout()">Logout</button>
+        <button (click)="logout()">Logout</button>
+
+
+        <br>
+        <br>
+    </div>
+    
+    <div>
+        <br>
+        <br>
+
+
+        <input type="file" (change)="onFileSelected($event)" />
+        <button (click)="uploadFile()">Upload File</button>
+        <ul>
+            <li *ngFor="let file of files; let i = index">
+                {{ file.fileName }} (id: {{ file.id }}) uploaded by {{ file.uploadedBy }} to course group {{ file.courseId }} 
+                <button (click)="deleteFile(i)">Delete</button>
+            </li>
+        </ul>
+    </div>
 </div>
