@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -18,6 +18,12 @@ export class CourseRegComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDepartments();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['departmentSelected'] && !changes['departmentSelected'].firstChange) {
+      this.clearSearch();
+    }
   }
 
   loadDepartments() {
@@ -63,7 +69,7 @@ export class CourseRegComponent implements OnInit {
     console.log('Registered for course:', course);
   }
 
-  searchCourses(searchQuery: string) {
+  search(searchQuery: string) {
     if (searchQuery.trim() !== '') {
         if (this.departmentSelected) {
             this.searchResult = this.courses.filter(course =>
@@ -77,14 +83,17 @@ export class CourseRegComponent implements OnInit {
                 department.name.toLowerCase().includes(searchQuery.toLowerCase())
             );
         }
-    } else {
-        this.searchResult = this.departmentSelected ? this.courses : this.departments;
     }
 }
 
+// TO DO: fix clear searh bar function 
   clearSearch() {
     this.searchQuery = '';
-    this.searchResult = this.courses;
+    if (this.departmentSelected){
+        this.searchResult = this.courses;
+    } else {
+      this.searchResult = this.departments;
+    }
   }
 
   goBack() {
