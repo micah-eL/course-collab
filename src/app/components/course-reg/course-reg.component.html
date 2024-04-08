@@ -1,25 +1,50 @@
-<div class="container">
-    <h1>Course Registration</h1>
-    <app-searchbar (searchQuery)="searchCourses($event)" (clearSearch) ="clearSearch()"></app-searchbar>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Course Code</th>
-            <th scope="col">Course Number</th>
-            <th scope="col">Course Name</th>
-            <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let course of searchResult">
-            <td>{{ course.code }}</td>
-            <td>{{ course.number }}</td>
-            <td>{{ course.name }}</td>
-            <td>
-            <button class="btn btn-primary" (click)="registerCourse(course)">Register</button>
-            </td>
-        </tr>
-    </tbody>
-    </table>
-</div>
-  
+    <div class="container">
+        <h1>Course Registration</h1>
+        <app-searchbar (searchQuery)="search($event)" (clearSearch) ="clearSearch()"></app-searchbar>
+        <div *ngIf="searchQuery !== ''">
+            Search Query: {{ searchQuery }}
+        </div>
+        <table *ngIf="!departmentSelected" class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Department Code</th>
+                    <th scope="col">Department Name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through departments for selection -->
+                <tr *ngFor="let department of searchResult">
+                    <td>{{ department.text }}</td>
+                    <td>{{ department.name }}</td>
+                    <td>
+                        <button class="button" (click)="loadCourses(department)">Select</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div *ngIf="departmentSelected">
+            <button *ngIf="departmentSelected" class="button backButton" (click)="goBack()">Back to Department Selection</button>            
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Course Code</th>
+                    <th scope="col">Course Number</th>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let course of searchResult">
+                    <td>{{ departmentCode.toUpperCase() }}</td>
+                    <td>{{ course.value.toUpperCase() }}</td>
+                    <td>{{ course.title }}</td>
+                    <td>
+                    <button class="button" (click)="registerCourse(course)">Register</button>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+    </div>
+    

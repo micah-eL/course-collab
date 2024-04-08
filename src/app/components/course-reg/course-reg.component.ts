@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-course-reg',
@@ -8,26 +7,61 @@ import { Router } from '@angular/router';
   styleUrls: ['./course-reg.component.css']
 })
 export class CourseRegComponent implements OnInit {
-  // courses: any[] = [];
-
-  // TO BE CHANGED: manual add, still need to retrieve courses from sfu
-  courses: any[] = [   
-  { code: 'CMPT', number: '372', name: 'Software Engineering' },
-  { code: 'BUS', number: '101', name: 'Introduction to Business' },
-  { code: 'ENG', number: '201', name: 'English Literature' }
-]
+  departments: any[] = [];
+  departmentSelected: boolean = false;
+  courses: any[] = [];
   searchResult: any[] = [];
-  searchQuery: string  = '';
+  searchQuery: string = '';
+  departmentCode : string = '';
 
-  constructor(private router: Router) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.loadCourses();
+    this.loadDepartments();
   }
 
-  loadCourses() {
-    //initially display all data on the courses until any query inserted on the search bar
-    this.searchResult = this.courses;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['departmentSelected'] && !changes['departmentSelected'].firstChange) {
+      this.clearSearch();
+    }
+  }
+
+  loadDepartments() {
+    const baseUrl = 'http://www.sfu.ca/bin/wcm/course-outlines';
+    const year = '2024'
+    const term = 'spring';
+    const apiUrl = `${baseUrl}?${year}/${term}`;
+
+    this.http.get<any[]>(apiUrl).subscribe(
+      (data) => {
+        this.departments = data.filter(departments => departments.name);
+        this.searchResult = this.departments;
+      },
+      (error) => {
+        console.error('Error loading departments:', error);
+      }
+    );
+  }
+
+  loadCourses(department: any) {
+      const baseUrl = 'http://www.sfu.ca/bin/wcm/course-outlines';
+      const year = '2024'
+      const term = 'spring';
+      const departmentCode = department.value;    
+  
+      const apiUrl = `${baseUrl}?${year}/${term}/${departmentCode}`;
+  
+      this.http.get<any[]>(apiUrl).subscribe(
+        (data) => {
+          this.courses = data;
+          this.departmentSelected = true;
+          this.departmentCode = departmentCode;
+          this.searchResult = this.courses;
+        },
+        (error) => {
+          console.error('Error loading courses:', error);
+        }
+      );
   }
 
   registerCourse(course: any) {
@@ -35,22 +69,36 @@ export class CourseRegComponent implements OnInit {
     console.log('Registered for course:', course);
   }
 
-  searchCourses(searchQuery: string) {
+  search(searchQuery: string) {
     if (searchQuery.trim() !== '') {
-      this.searchResult = this.courses.filter(course =>
-        course.code.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        course.number.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        course.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+        if (this.departmentSelected) {
+            this.searchResult = this.courses.filter(course =>
+                (this.departmentCode && this.departmentCode.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                (course.value && course.value.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                (course.title && course.title.toLowerCase().includes(searchQuery.toLowerCase()))
+            );
+        } else {
+            this.searchResult = this.departments.filter(department =>
+                department.text.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                department.name.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+        }
+    }
+}
+
+// TO DO: fix clear searh bar function 
+  clearSearch() {
+    this.searchQuery = '';
+    if (this.departmentSelected){
+        this.searchResult = this.courses;
     } else {
-      this.searchResult = this.courses;
+      this.searchResult = this.departments;
     }
   }
 
-
-  clearSearch() {
-    this.searchQuery = '';
-    this.searchResult = this.courses;
+  goBack() {
+      this.departmentSelected = false;
+      this.searchResult = this.departments; 
   }
 
 }
