@@ -15,13 +15,13 @@
                 <td>{{ department.text }}</td>
                 <td>{{ department.name }}</td>
                 <td>
-                    <button class="btn btn-primary" (click)="loadCourses(department)">Select</button>
+                    <button class="button" (click)="loadCourses(department)">Select</button>
                 </td>
             </tr>
         </tbody>
     </table>
     <div *ngIf="departmentSelected">
-        <button *ngIf="departmentSelected" class="backButton" (click)="goBack()">Back to Department Selection</button>            
+        <button *ngIf="departmentSelected" class="button backButton" (click)="goBack()">Back to Department Selection</button>            
         <table class="table">
             <thead>
             <tr>
@@ -37,7 +37,7 @@
                 <td>{{ course.value.toUpperCase() }}</td>
                 <td>{{ course.title }}</td>
                 <td>
-                <button class="btn btn-primary" (click)="registerCourse(course)">Register</button>
+                <button class="button" (click)="registerCourse(course)">Register</button>
                 </td>
             </tr>
         </tbody>

@@ -1,11 +1,6 @@
 /* CSS taken from  https://getcssscan.com/css-buttons-examples , button 19*/
 button {
-    margin-right: 10px;
-    margin-left: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    display: block;
-    background-color: #5476d6;
+    background-color: #04208f;
     border: 0;
     border-radius: 100px;
     box-sizing: border-box;
@@ -27,6 +22,15 @@ button {
     transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
     user-select: none;
     -webkit-user-select: none;
+}
+
+.backButton {
+    margin-right: 10px;
+    margin-left: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: block;
+    background-color: #5476d6;
 }
 
 .backButton:hover,
