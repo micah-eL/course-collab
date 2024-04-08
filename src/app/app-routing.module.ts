@@ -6,7 +6,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { MessagesComponent } from './components/messages/messages.component';
 import { CourseRegComponent } from './components/course-reg/course-reg.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 const routes: Routes = [
@@ -14,7 +14,7 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'messages', component: MessagesComponent},
     { path: 'course-reg', component: CourseRegComponent},
-    { path: 'profile', component: ProfileComponent}
+    { path: 'profile/:userID', component: ProfileComponent}
 ];
 
 @NgModule({
