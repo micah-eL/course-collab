@@ -21,7 +21,7 @@ interface RegisterResponse {
     providedIn: 'root'
 })
 export class AuthService {
-    private baseUrl = "http://localhost:3002/api/";
+    private baseUrl = "http://34.145.3.31:3002/api/";
 
     constructor(private http: HttpClient) {
         this.http.get(this.baseUrl + "health").pipe(

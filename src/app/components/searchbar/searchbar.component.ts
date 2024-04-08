@@ -17,4 +17,5 @@ export class SearchBarComponent {
   onClear() {
     this.clearSearch.emit();
   }
+  
 }
