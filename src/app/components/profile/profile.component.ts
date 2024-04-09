@@ -40,4 +40,17 @@ export class ProfileComponent {
     this.router.navigate(['/course-reg'])
   }
 
+  deleteCourse(index: number){
+    if (this.user && this.user.joinedCourses && this.user.joinedCourses.length > index) {
+      this.user.joinedCourses.splice(index, 1);
+      this.userService.updateUser(this.userID, this.user.joinedCourses).subscribe(
+        (data) => {
+          console.log('Course deleted successfully:', data);
+        },
+        (error) => {
+          console.error('Error deleting course:', error);
+        }
+      );
+    }
+  }
 }
