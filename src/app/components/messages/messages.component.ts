@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Comment } from 'src/app/models/comment.model';
 import { UserService } from 'src/app/services/user.service';
 import { v4 as uuidv4 } from 'uuid';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-messages',
@@ -12,6 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent implements OnInit {
+  user: User | undefined;
   title: string = '';
   text: string = '';
   firstName: string = '';
@@ -32,16 +34,19 @@ export class MessagesComponent implements OnInit {
     this.getUserInfo();
   }
 
-  getUserInfo(){
-    this.userService.getUser(this.loggedInUserId)?.subscribe(
-      res => {
-        this.firstName = res.firstName
-        this.lastName  = res.lastName
+  getUserInfo(): void {
+    this.userService.getUser(this.loggedInUserId).subscribe(
+      (data: any) => {
+        if (data && data.status === 'success') {
+          this.user = data.data;
+          this.firstName = this.user!.firstName
+          this.lastName = this.user!.lastName
+        }
       },
-      error => {
-        console.error('Failed to fetch user:', error);
+      (error) => {
+        console.error('Error fetching user data:', error);
       }
-  );
+    );
   }
 
   extractUrlParameters() {
@@ -60,7 +65,6 @@ export class MessagesComponent implements OnInit {
     else {
         alert("You do not have permission to delete this file.");
     }
-    
   }
 
   loadComments(): void {
