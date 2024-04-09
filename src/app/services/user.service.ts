@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
+import { Course } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class UserService {
     return this.http.post<User>(this.baseUrl + 'users', user);
   }
 
-  updateUser(userID: string, joinedCourses: string[]): Observable<User> {
+  updateUser(userID: string, joinedCourses: Course[]): Observable<User> {
     const body = { joinedCourses }; // Wrap joinedCourses in an object
     return this.http.patch<User>(this.baseUrl + `users/${userID}`, body);
   }

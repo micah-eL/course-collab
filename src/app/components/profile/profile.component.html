@@ -49,20 +49,20 @@
         <div class="card-body">
           <div class="row">
             <div class="col-sm-3">
-              <h6 class="mb-0">Joined Course</h6>
+              <h6 class="mb-0"><b>Joined Course</b></h6>
             </div>
             <div class="col-sm-3">
 
             </div>
           </div>
           <hr>
-          <div *ngFor="let course of user.joinedCourses">
+          <div *ngFor="let course of user.joinedCourses; let i = index">
             <div class="row3">
                 <div class="col-sm-9 col1">
                     <h6 class="mb-0">{{ course.department.toUpperCase() }} {{ course.courseCode }} - {{ course.title }}</h6>
                 </div>
                 <div class="col-sm-3 col2">
-                    <button class="btn btn-outline-primary">Delete Course</button>
+                    <button class="btn btn-outline-primary" (click)="deleteCourse(i)">Delete Course</button>
                     <button class="btn btn-primary">Go to Course Page</button>
                 </div>
             </div>
