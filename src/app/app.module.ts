@@ -11,6 +11,7 @@ import { MessagesComponent } from './components/messages/messages.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CourseRegComponent } from './components/course-reg/course-reg.component';
 import { SearchBarComponent } from './components/searchbar/searchbar.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { SearchBarComponent } from './components/searchbar/searchbar.component';
         MessagesComponent,
         NavbarComponent,
         CourseRegComponent,
-        SearchBarComponent
+        SearchBarComponent,
+        ProfileComponent
     ],
     imports: [
         BrowserModule,

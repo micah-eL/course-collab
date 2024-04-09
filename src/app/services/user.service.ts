@@ -1,30 +1,31 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  private baseUrl = "http://localhost:3002/api/"
 
   constructor(private http: HttpClient) { }
-  // private baseUrl = "http://34.145.3.31:3002/api/";
-  private baseUrl = "http://localhost:3002/api/"
-  getAllUsers(): Observable<any> {
-    return this.http.get(this.baseUrl + 'users');
+
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl + 'users');
   }
 
-  getUser(userID: string): Observable<any> {
-    return this.http.get(this.baseUrl + `users/${userID}`);
+  getUser(userID: string): Observable<User> {
+    return this.http.get<User>(this.baseUrl + `users/${userID}`);
   }
 
-  createUser(user: any): Observable<any> {
-    return this.http.post(this.baseUrl + 'users', user);
+  createUser(user: User): Observable<User> {
+    return this.http.post<User>(this.baseUrl + 'users', user);
   }
 
-  updateUser(userID: string, joinedCourses: string[]): Observable<any> {
-    const body = joinedCourses; 
-    return this.http.patch(this.baseUrl + `users/${userID}`, body);
+  updateUser(userID: string, joinedCourses: string[]): Observable<User> {
+    const body = { joinedCourses }; // Wrap joinedCourses in an object
+    return this.http.patch<User>(this.baseUrl + `users/${userID}`, body);
   }
 
   deleteUser(userID: string): Observable<any> {

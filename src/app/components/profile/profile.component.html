@@ -1,0 +1,17 @@
+<div *ngIf="user" class="profile-container">
+    <h1>{{ user.firstName }} {{ user.lastName }}'s Profile</h1>
+    <div class="profile-info">
+      <p>Email: {{ user.email }}</p>
+      <p>Joined Courses:</p>
+      <ul>
+        <li *ngFor="let course of user.joinedCourses">{{ course.department }} - {{ course.title }} ({{ course.courseCode }})</li>
+      </ul>
+    </div>
+    <!-- <div class="profile-actions">
+      <button (click)="updateUserCourses()">Update Courses</button>
+      <button (click)="deleteUser()">Delete User</button>
+    </div> -->
+</div>
+<div *ngIf="!user" class="loading-container">
+    <p>Loading user data...</p>
+</div>

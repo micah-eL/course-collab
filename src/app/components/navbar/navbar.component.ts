@@ -8,6 +8,8 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class NavbarComponent {
   showNavbar: boolean = false;
+  loggedInUserId: string | null = sessionStorage.getItem('loggedInUserId');
+  
   constructor(private router: Router){}
 
   ngOnInit() {
