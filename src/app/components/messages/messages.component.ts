@@ -6,14 +6,21 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']
 })
-export class MessagesComponent implements OnInit{
-  loggedInUserId: string = '';
-  
-  constructor(private userService: UserService) {}
-  ngOnInit(): void{
-    this.loggedInUserId = sessionStorage.getItem('loggedInUserId') || '';
+export class MessagesComponent implements OnInit {
+  title: string = '';
+  text: string = '';
+
+  constructor() { }
+
+  ngOnInit(): void {
+    this.extractUrlParameters();
   }
-  saveFile() {
-    
+
+  extractUrlParameters() {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Decode the URL-encoded parameters
+    this.title = decodeURIComponent(urlParams.get('title')!);
+    this.text = decodeURIComponent(urlParams.get('text')!);
   }
 }
