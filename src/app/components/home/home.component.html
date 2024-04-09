@@ -5,8 +5,8 @@
     <div class = "col" id="courseContainer" *ngFor="let course of courses; let i = index">
       <div class="card shadow mb-3" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title">{{course.title}}</h5>
-            <p class="card-text">{{course.courseCode}}</p>
+            <h5 class="card-title">{{course.department}} {{course.courseCode}}</h5>
+            <p class="card-text">{{course.title}}</p>
             <a class="icon-link icon-link-hover" [href]="'/messages?title=' + course.title + '&text=' + course.courseCode">
               Course Page
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
