@@ -1,5 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-course-reg',
@@ -13,8 +14,10 @@ export class CourseRegComponent implements OnInit {
   searchResult: any[] = [];
   searchQuery: string = '';
   departmentCode : string = '';
+  loggedInUserId: string = sessionStorage.getItem('loggedInUserId')!;
+  private baseUrl = "http://localhost:3002/api";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {}
 
   ngOnInit(): void {
     this.loadDepartments();
@@ -65,8 +68,34 @@ export class CourseRegComponent implements OnInit {
   }
 
   registerCourse(course: any) {
-    // Logic to register for courses
-    console.log('Registered for course:', course);
+    const registeredCourse = {
+      department: this.departmentCode,
+      title: course.title,
+      courseCode: course.value
+    };
+  
+    const userID = this.loggedInUserId;
+  
+    this.userService.getUser(userID).subscribe(
+      (userData) => {
+        const joinedCourses = userData.joinedCourses || []; 
+        joinedCourses.push(registeredCourse);
+
+        console.log(joinedCourses);
+  
+        this.http.patch(`${this.baseUrl}/users/${userID}`, { joinedCourses }).subscribe(
+          (data) => {
+            console.log('User updated with registered course:', data);
+          },
+          (error) => {
+            console.error('Error updating user with registered course:', error);
+          }
+        );
+      },
+      (error) => {
+        console.error('Error updating user with registered course:', error);
+      }
+    );
   }
 
   search(searchQuery: string) {
