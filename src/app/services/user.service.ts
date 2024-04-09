@@ -1,40 +1,34 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class UserService {
-    private baseUrl = "http://localhost:3002/api/";
-    // "http://34.145.3.31:3002/api/";
+  private baseUrl = "http://localhost:3002/api/"
 
-    constructor(private http: HttpClient){}
+  constructor(private http: HttpClient) { }
 
-    getUser(userID: string): Observable<User>{
-        return this.http.get<User>(this.baseUrl+userID).pipe(
-            catchError((error: any) => {
-              return throwError(error.error || 'Server error');
-            })
-        );
-    }
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl + 'users');
+  }
 
-    updateUser(user: User): Observable<User> {
-        return this.http.patch<User>(this.baseUrl + user._id, user).pipe(
-          catchError((error: any) => {
-            return throwError(error.error || 'Server error');
-          })
-        );
-      }
-    
-      deleteUser(userID: string): Observable<any> {
-        return this.http.delete<any>(this.baseUrl + userID).pipe(
-          catchError((error: any) => {
-            return throwError(error.error || 'Server error');
-          })
-        );
-      }
+  getUser(userID: string): Observable<User> {
+    return this.http.get<User>(this.baseUrl + `users/${userID}`);
+  }
+
+  createUser(user: User): Observable<User> {
+    return this.http.post<User>(this.baseUrl + 'users', user);
+  }
+
+  updateUser(userID: string, joinedCourses: string[]): Observable<User> {
+    const body = { joinedCourses }; // Wrap joinedCourses in an object
+    return this.http.patch<User>(this.baseUrl + `users/${userID}`, body);
+  }
+
+  deleteUser(userID: string): Observable<any> {
+    return this.http.delete(this.baseUrl + `users/${userID}`);
+  }
 }

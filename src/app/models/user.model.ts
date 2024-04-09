@@ -6,14 +6,14 @@ export class User {
     password: string;
     firstName: string;
     lastName: string;
-    joinedCourses: string[];
+    joinedCourses: Course[];
 
     constructor(
         email: string,
         password: string,
         firstName: string,
         lastName: string,
-        joinedCourses: string[] = [],
+        joinedCourses: Course[] = [],
         _id: string = uuidv4()
     ) 
     {
@@ -25,3 +25,10 @@ export class User {
         this.joinedCourses = joinedCourses;
     }
 }
+
+export interface Course {
+    department: string;
+    title: string;
+    courseCode: string;
+}
+
