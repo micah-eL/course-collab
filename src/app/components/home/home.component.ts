@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { User } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -12,22 +13,28 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HomeComponent implements OnInit{
     loggedInUserId: string = sessionStorage.getItem('loggedInUserId')!;
-    constructor(private authService : AuthService, private router: Router) { }
+    constructor(private authService : AuthService, private userService : UserService, private router: Router) { }
     //User's course data (remember to link to courses)
     private courses = [{
-        title: '',
-        text: '',
+        department: 'CMPT',
+        title: 'Introduction to Programming II',
+        value: '125'
     }]
     //Loads the courses of the user
     ngOnInit(): void {
 
-        // const cardContainer = document.getElementById('cardContainer') as HTMLElement;
-        // this.courses.forEach(item => {
-        //     const cardElement = document.createElement('div');
-        //     cardElement.innerHTML = this.generateCard(item.title, item.text);
-        //     cardContainer.appendChild(cardElement);
-        // })
+        this.userService.getUser(this.loggedInUserId)?.subscribe(
+            res => {
+              console.log(res.data);
+              this.courses = res.data.registerCourse;
+            },
+            error => {
+              console.error('Failed to fetch user:', error);
+            }
+        );
     }
+    
+
     //Dynamically generate cards
     generateCard(title: String, text: String) {
         return `
