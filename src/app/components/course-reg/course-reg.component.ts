@@ -77,12 +77,10 @@ export class CourseRegComponent implements OnInit {
     const userID = this.loggedInUserId;
   
     this.userService.getUser(userID).subscribe(
-      (userData) => {
-        const joinedCourses = userData.joinedCourses || []; 
+      (userData: any) => {
+        const joinedCourses = userData.data.joinedCourses || []; 
         joinedCourses.push(registeredCourse);
-
         console.log(joinedCourses);
-  
         this.http.patch(`${this.baseUrl}/users/${userID}`, { joinedCourses }).subscribe(
           (data) => {
             console.log('User updated with registered course:', data);
@@ -94,7 +92,7 @@ export class CourseRegComponent implements OnInit {
       },
       (error) => {
         console.error('Error updating user with registered course:', error);
-      }
+      } 
     );
   }
 
