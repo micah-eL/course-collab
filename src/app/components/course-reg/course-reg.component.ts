@@ -1,6 +1,8 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-course-reg',
@@ -17,7 +19,7 @@ export class CourseRegComponent implements OnInit {
   loggedInUserId: string = sessionStorage.getItem('loggedInUserId')!;
   private baseUrl = "http://localhost:3002/api";
 
-  constructor(private http: HttpClient, private userService: UserService) {}
+  constructor(private http: HttpClient, private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadDepartments();
@@ -80,10 +82,11 @@ export class CourseRegComponent implements OnInit {
       (userData: any) => {
         const joinedCourses = userData.data.joinedCourses || []; 
         joinedCourses.push(registeredCourse);
-        console.log(joinedCourses);
         this.http.patch(`${this.baseUrl}/users/${userID}`, { joinedCourses }).subscribe(
           (data) => {
             console.log('User updated with registered course:', data);
+            let message = `Successfully registered to ${registeredCourse.department.toUpperCase()}${registeredCourse.courseCode} - ${registeredCourse.title} course group`
+            window.alert(message);
           },
           (error) => {
             console.error('Error updating user with registered course:', error);
@@ -120,12 +123,17 @@ export class CourseRegComponent implements OnInit {
         this.searchResult = this.courses;
     } else {
       this.searchResult = this.departments;
+      console.log(this.searchQuery.length);
     }
   }
 
-  goBack() {
+  goBacktoDepartment() {
       this.departmentSelected = false;
       this.searchResult = this.departments; 
+  }
+
+  goBackHome() {
+    this.router.navigate(['/']);
   }
 
 }
