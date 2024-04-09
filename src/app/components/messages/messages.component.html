@@ -35,26 +35,30 @@
             </div>
         </div>
     </div>
-    <div class="card mb-4">
-        <div class="card-body">
-            <form>
+    <div class = "container">
+        <div class="card mb-4">
+            <div class="card-body">
+              <form (submit)="submitComment()">
                 <div class="mb-3">
-                    <label for="commentInput" class="form-label">Your Comment:</label>
-                    <textarea class="form-control" id="commentInput" rows="3"></textarea>
+                  <label for="commentInput" class="form-label">Your Comment:</label>
+                  <textarea [(ngModel)]="commentInput" name="commentInput" class="form-control" id="commentInput" rows="3"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
-    </div>
-    <div class="card mb-4">
-        <div class="card-body">
-          <p>Type your note, and hit enter to add it</p>
-
-          <div class="d-flex justify-content-between">
-            <div class="d-flex flex-row align-items-center">
-              <p class="small mb-0 ms-2">User</p>
+              </form>
             </div>
           </div>
+    </div>
+    <div class = "container" *ngFor="let comment of comments">
+        <div class="card mb-4">
+            <div class="card-body">
+                <p>{{ comment.comment }}</p>
+
+                <div class="d-flex justify-content-between">
+                <div class="d-flex flex-row align-items-center">
+                    <p class="small mb-0 ms-2">{{comment.firstName}} {{comment.lastName}}</p>
+                </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
