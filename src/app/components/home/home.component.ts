@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 import { UserService } from 'src/app/services/user.service';
+import { Course } from 'src/app/models/user.model';
 
 
 @Component({
@@ -14,11 +15,7 @@ export class HomeComponent implements OnInit{
     loggedInUserId: string = sessionStorage.getItem('loggedInUserId')!;
     constructor(private authService : AuthService, private userService : UserService, private router: Router) {}
     //User's course data (remember to link to courses)
-    private courses = [{
-        department: 'CMPT',
-        title: 'Introduction to Programming II',
-        value: '125'
-    }]
+    private courses: Course[]= []
     //Loads the courses of the user
     ngOnInit(): void {
         this.populateCourses();
@@ -26,13 +23,13 @@ export class HomeComponent implements OnInit{
     populateCourses() {
         this.userService.getUser(this.loggedInUserId)?.subscribe(
             res => {
-              this.courses = res.data.joinedCourses;
+              this.courses = res.joinedCourses;
 
               const cardContainer = document.getElementById('courseContainer') as HTMLElement;
               this.courses.forEach(item => {
                   const cardElement = document.createElement('div');
                   cardElement.className = 'col';
-                  cardElement.innerHTML = this.generateCard(item.department + " " + item.value, item.title);
+                  cardElement.innerHTML = this.generateCard(item.department + " " + item.courseCode, item.title);
                   cardContainer.appendChild(cardElement);
               })
             },

@@ -35,8 +35,8 @@ export class MessagesComponent implements OnInit {
   getUserInfo(){
     this.userService.getUser(this.loggedInUserId)?.subscribe(
       res => {
-        this.firstName = res.data.firstName;
-        this.lastName  = res.data.lastName;
+        this.firstName = res.firstName
+        this.lastName  = res.lastName
       },
       error => {
         console.error('Failed to fetch user:', error);
