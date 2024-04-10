@@ -19,7 +19,7 @@
         <button (click)="uploadFile()">Upload File</button>
         <ul>
             <li *ngFor="let file of files; let i = index">
-                {{ file.fileName }} (id: {{ file.id }}) uploaded by {{ file.uploadedBy }} to course group {{ file.courseId }} 
+                {{ file.fileName }} uploaded by {{ file.uploadedBy }} to course group {{ file.courseId }} at {{ file.createdAt }}
                 <button (click)="deleteFile(i)">Delete</button>
             </li>
         </ul>
